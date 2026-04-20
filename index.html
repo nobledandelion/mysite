@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NeuroEGE — нейросети для подготовки к ЕГЭ. Персональные планы, объяснения, тренировки и проверка заданий.">
+    <title>NeuroEGE — Нейросети для подготовки к ЕГЭ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Space+Grotesk:wght@500;600&amp;display=swap');
+
+        :root {
+            --primary: #00d4ff;
+        }
+
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, #0a0a2a 0%, #1a0033 100%);
+        }
+
+        .neural-grid {
+            background-image:
+                radial-gradient(circle at 25% 25%, rgba(0, 212, 255, 0.15) 0px, transparent 50%),
+                radial-gradient(circle at 75% 75%, rgba(138, 43, 226, 0.15) 0px, transparent 50%);
+            background-size: 80px 80px;
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgb(0 212 255 / 0.25);
+        }
+
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), #8a2be2);
+            z-index: 50;
+        }
+    </style>
+</head>
+<body class="bg-[#05050f] text-white font-sans">
+    <!-- Прогресс-бар скролла -->
+    <div id="progress-bar" class="scroll-progress w-0"></div>
+
+    <!-- Навбар -->
+    <nav class="bg-[#05050f]/80 backdrop-blur-lg border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex items-center justify-between">
+            <!-- Лого -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 bg-gradient-to-br from-[#00d4ff] to-[#8a2be2] rounded-2xl flex items-center justify-center text-2xl shadow-lg shadow-[#00d4ff]/50">
+                    🧠
+                </div>
+                <h1 class="text-3xl font-bold tracking-tighter" style="font-family: 'Space Grotesk', sans-serif;">NeuroEGE</h1>
+            </div>
+
+            <div class="hidden md:flex items-center gap-8 text-lg">
+                <a onclick="document.getElementById('why-section').scrollIntoView({ behavior: 'smooth' })"
+                   class="hover:text-[#00d4ff] cursor-pointer flex items-center gap-1">
+                    <i class="fas fa-lightbulb"></i>
+                    Зачем нейросети
+                </a>
+                <a onclick="document.getElementById('neural-networks').scrollIntoView({ behavior: 'smooth' })"
+                   class="hover:text-[#00d4ff] cursor-pointer flex items-center gap-1">
+                    <i class="fas fa-robot"></i>
+                    Полезные нейросети
+                </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <header class="hero-bg min-h-screen flex items-center relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 py-24 grid md:grid-cols-2 gap-12 items-center">
+            <div class="space-y-8">
+                <div class="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md px-6 py-3 rounded-3xl text-[#00d4ff] font-medium border border-white/20">
+                    <div class="w-3 h-3 bg-[#00d4ff] rounded-full animate-pulse"></div>
+                    ИИ для ЕГЭ
+                </div>
+
+                <h1 class="text-6xl md:text-7xl font-bold leading-none tracking-tighter" style="font-family: 'Space Grotesk', sans-serif;">
+                    Нейросети,<br>которые помогут<br>сдать ЕГЭ на 100
+                </h1>
+
+                <p class="text-2xl text-gray-300 max-w-lg">
+                    Персональный ИИ-репетитор.
+                    Планы, объяснения, тренировки и проверка заданий — всё в одном месте.
+                </p>
+
+                <!-- Главная кнопка -->
+                <div class="flex flex-wrap gap-4">
+                    <button onclick="document.getElementById('neural-networks').scrollIntoView({ behavior: 'smooth' })"
+                            class="group bg-gradient-to-r from-[#00d4ff] to-[#8a2be2] text-white px-10 py-5 rounded-3xl text-2xl font-semibold flex items-center gap-4 hover:scale-105 shadow-2xl shadow-[#00d4ff]/50">
+                        Перейти к нейросетям
+                        <i class="fas fa-arrow-down group-active:rotate-45"></i>
+                    </button>
+
+                    <a href="#why-section"
+                       onclick="document.getElementById('why-section').scrollIntoView({ behavior: 'smooth' })"
+                       class="border border-white/30 hover:border-white/60 px-8 py-5 rounded-3xl text-xl font-medium flex items-center gap-3">
+                        <i class="fas fa-info-circle"></i>
+                        Зачем это нужно
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Декоративный визуал -->
+            <div class="hidden md:flex justify-center relative">
+                <div class="w-96 h-96 bg-gradient-to-br from-[#00d4ff]/10 to-[#8a2be2]/10 rounded-[4rem] flex items-center justify-center border border-white/10 backdrop-blur-xl relative">
+                    <div class="text-[180px] animate-float">🧠</div>
+                    <div class="absolute -top-6 -right-6 bg-white/10 backdrop-blur-md px-6 py-3 rounded-3xl flex items-center gap-3 border border-white/20">
+                        <i class="fas fa-bolt text-[#00d4ff]"></i>
+                        <div>
+                            <div class="text-sm font-medium"></div>
+                            <div class="text-3xl font-bold text-[#00d4ff]"></div>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-8 left-8 text-center bg-[#05050f]/80 backdrop-blur-md px-5 py-4 rounded-3xl border border-[#00d4ff]/30">
+                        <div class="text-[#00d4ff] text-sm"></div>
+                        <div class="text-5xl font-bold font-mono"></div>
+                        <div class="text-sm"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Волны внизу -->
+        <div class="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#05050f] to-transparent"></div>
+    </header>
+
+    <!-- Секция "Зачем нужны нейросети" -->
+    <section id="why-section" class="max-w-7xl mx-auto px-6 py-24 neural-grid">
+        <div class="grid md:grid-cols-12 gap-16">
+            <!-- Левая колонка -->
+            <div class="md:col-span-5">
+                <div class="sticky top-28">
+                    <span class="px-4 py-2 bg-[#00d4ff]/10 text-[#00d4ff] rounded-3xl text-sm font-medium">ВАЖНАЯ ИНФОРМАЦИЯ</span>
+                    <h2 class="text-5xl font-bold tracking-tighter mt-6 leading-none" style="font-family: 'Space Grotesk', sans-serif;">
+                        Зачем нужны нейросети<br>при подготовке к ЕГЭ?
+                    </h2>
+                    <div class="mt-8 text-xl text-gray-300 leading-relaxed">
+                        Современный ЕГЭ — это умение быстро думать, анализировать и решать нестандартные задачи. От результатов ЕГЭ зависит будущее школьников.  
+                        <span class="text-[#00d4ff]">Нейросети дают тебе суперспособности репетитора 24/7</span>.
+                    </div>
+
+                    <div class="mt-12 flex gap-6">
+                        <div class="flex-1 bg-white/5 border border-white/10 rounded-3xl p-6">
+                            <i class="fas fa-brain text-4xl text-[#00d4ff] mb-4"></i>
+                            <h4 class="font-semibold text-2xl">Персонализация</h4>
+                            <p class="text-gray-400 mt-2">Учитывают именно твои пробелы и время на подготовку</p>
+                        </div>
+                        <div class="flex-1 bg-white/5 border border-white/10 rounded-3xl p-6">
+                            <i class="fas fa-bolt text-4xl text-[#8a2be2] mb-4"></i>
+                            <h4 class="font-semibold text-2xl">Мгновенная обратная связь</h4>
+                            <p class="text-gray-400 mt-2">Проверка заданий за секунды вместо недель ожидания</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Правая колонка с преимуществами -->
+            <div class="md:col-span-7 space-y-8">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-[#00d4ff]/30 card-hover">
+                        <div class="text-[#00d4ff] text-4xl mb-6">📅</div>
+                        <h3 class="text-2xl font-semibold">Индивидуальный план</h3>
+                        <p class="mt-4 text-gray-300">Нейросеть составляет помесячный график подготовки с учётом всех твоих предметов и количества свободного времени.</p>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-[#8a2be2]/30 card-hover">
+                        <div class="text-[#8a2be2] text-4xl mb-6">📝</div>
+                        <h3 class="text-2xl font-semibold">Разбор тем + практика</h3>
+                        <p class="mt-4 text-gray-300">Объясняет любую тему простыми словами, генерирует похожие задания и сразу проверяет твои ответы.</p>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-[#00d4ff]/30 card-hover">
+                        <div class="text-[#00d4ff] text-4xl mb-6">🔍</div>
+                        <h3 class="text-2xl font-semibold">Анализ ошибок</h3>
+                        <p class="mt-4 text-gray-300">Видит твои слабые места и сразу предлагает именно те задания, которые нужно доработать.</p>
+                    </div>
+
+                    <div class="bg-white/5 border border-white/10 rounded-3xl p-8 hover:border-[#8a2be2]/30 card-hover">
+                        <div class="text-[#8a2be2] text-4xl mb-6">🎤</div>
+                        <h3 class="text-2xl font-semibold">Тренировка устной части</h3>
+                        <p class="mt-4 text-gray-300">Особенно важно для английского и других предметов с устным блоком.</p>
+                    </div>
+                </div>
+
+                <!-- Важная информация про нейросети -->
+                <div class="mt-16 bg-gradient-to-br from-[#1a0033] to-[#0a0a2a] border border-[#8a2be2]/20 rounded-3xl p-10">
+                    <h3 class="text-3xl font-semibold mb-6 flex items-center gap-3">
+                        <i class="fas fa-circle-info text-[#8a2be2]"></i>
+                        Важная информация про нейросети
+                    </h3>
+                    <div class="prose prose-invert text-gray-300 text-lg leading-relaxed">
+                        <p>Нейросети — это искусственные нейронные сети, обученные на миллиардах текстов, задач и примеров. Они могут:</p>
+                        <ul class="list-none space-y-4 mt-6">
+                            <li class="flex gap-4"><span class="text-[#00d4ff] text-2xl">•</span> Генерировать персональные планы подготовки</li>
+                            <li class="flex gap-4"><span class="text-[#00d4ff] text-2xl">•</span> Объяснять сложные темы проще, чем учитель</li>
+                            <li class="flex gap-4"><span class="text-[#00d4ff] text-2xl">•</span> Проверять сочинения, эссе и устные ответы по критериям ЕГЭ</li>
+                            <li class="flex gap-4"><span class="text-[#00d4ff] text-2xl">•</span> Создавать тысячи уникальных тренировочных вариантов</li>
+                        </ul>
+                        <p class="mt-8 text-sm opacity-75"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Секция нейросетей -->
+    <section id="neural-networks" class="max-w-7xl mx-auto px-6 py-24 bg-[#0a0a1f]">
+        <div class="flex items-end justify-between mb-12">
+            <div>
+                <span class="text-[#00d4ff] uppercase tracking-[2px] text-sm font-medium"></span>
+                <h2 class="text-5xl font-bold tracking-tighter" style="font-family: 'Space Grotesk', sans-serif;">Полезные нейросети для ЕГЭ</h2>
+            </div>
+            <a href="#why-section" class="hidden md:flex items-center gap-2 text-gray-400 hover:text-white">
+                ↑ Наверх
+            </a>
+        </div>
+
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            <!-- 1. AiBro -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">🤖</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">AiBro</h3>
+                        <a href="https://aibro.io/" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">aibro.io <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Нейросеть обучена на огромном количестве данных и способна помогать в различных задачах, например составлять персональный план подготовки к ЕГЭ помесячно, учитывая предметы и количество времени для подготовки. Опишет темы, которые нужно изучить, повторить для подготовки к ЕГЭ, а также подробно объяснит запрошенную тему, предоставит советы и идеи в любой сфере.</p>
+                <a href="https://aibro.io/" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Перейти к AiBro →
+                </a>
+            </div>
+
+            <!-- 2. AiGPTbot -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">📘</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">AiGPTbot</h3>
+                        <a href="https://aigptbot.ru/" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">aigptbot.ru <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Представляет онлайн-сервис на базе нейросети GPT, который помогает готовиться к ЕГЭ. Позиционирует себя как ИИ-репетитор, который объясняет темы, разбирает задания, генерирует тренировки и помогает проверить ответ по критериям. ИИ анализирует ошибки и формирует индивидуальный план, фокусируясь на слабых местах, дает возможность решить пробник ЕГЭ, после чего мгновенно определяет, какие темы требуют немедленной доработки. ИИ может генерировать тренировочные варианты по запросу, сфокусированные на определенную тему.</p>
+                <a href="https://aigptbot.ru/" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Перейти к AiGPTbot →
+                </a>
+            </div>
+
+            <!-- 3. Сочинитель -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">✍️</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">Сочинитель</h3>
+                        <a href="https://t.me/essayguruaibot" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">Telegram-бот <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Представляет собой телеграм-бот, созданный, чтобы помочь школьникам подготовиться к итоговому сочинению. Это не просто генератор готовых текстов, а сервис, который помогает школьнику сделать все самостоятельно. Работает он в формате диалога: ученик выбирает тему, а бот начинает задавать вопросы, подталкивать к аргументам, предлагать варианты вступления и структуры. Можно спросить, как оформить тезис, как подобрать литературный пример, и даже уточнить, что написать в выводе.</p>
+                <a href="https://t.me/essayguruaibot" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Открыть в Telegram →
+                </a>
+            </div>
+
+            <!-- 4. Symbolab -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">📐</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">Symbolab</h3>
+                        <a href="https://ru.symbolab.com/" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">ru.symbolab.com <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Онлайн-сервис для решения математических задач на базе искусственного интеллекта. Разработан для помощи школьникам, студентам и профессионалам, охватывает различные темы, включая алгебру, математический анализ, геометрию. Содержит различные калькуляторы, такие как бинарный, калькулятор округлений, калькулятор процентов.</p>
+                <a href="https://ru.symbolab.com/" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Перейти к Symbolab →
+                </a>
+            </div>
+
+            <!-- 5. Яндекс Учебник -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">📚</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">Яндекс Учебник</h3>
+                        <a href="https://education.yandex.ru/uchebnik/main" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">education.yandex.ru <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Образовательная платформа для школьников с ИИ-помощником для подготовки к ЕГЭ. На платформе можно отрабатывать тестовую часть экзаменов по информатике и математике, прорешивая номера и получая мгновенную обратную связь в виде объяснения решения. Здесь всё собрано в одном месте: теория, практика, пробники и даже встроенный редактор кода. Главное — ИИ-помощник ведёт диалог с учеником и объясняет решение пошагово.</p>
+                <a href="https://education.yandex.ru/uchebnik/main" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Перейти к Яндекс Учебнику →
+                </a>
+            </div>
+
+            <!-- 6. Skysmart AI ЕГЭ Эксперт -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">🗣️</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">Skysmart AI ЕГЭ Эксперт</h3>
+                        <a href="https://t.me/ai_ege_expert_bot" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">Telegram-бот <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Тем, кто сдаёт английский, сложнее всего приходится с устной частью экзамена. «Skysmart AI ЕГЭ Эксперт» — чат-бот в Telegram. Он помогает отработать задания устной части, оценивает произношение, грамматику, лексику и выставляет баллы по критериям ЕГЭ. Можно отправить голосовое сообщение — бот проанализирует и выдаст подробную обратную связь. Также проверяет письменные задания и засекает время.</p>
+                <a href="https://t.me/ai_ege_expert_bot" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Открыть бота в Telegram →
+                </a>
+            </div>
+
+            <!-- 7. ChatGPT -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">💬</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">ChatGPT</h3>
+                        <a href="https://chatgpt.com/" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">chatgpt.com <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Представляет собой чат-бот на базе искусственного интеллекта, разработанный компанией OpenAI. Он способен вести диалог с пользователем, генерировать тексты, анализировать данные, выполнять различные задачи. ChatGPT может стать полезным инструментом при подготовке к ЕГЭ, помогая в изучении материала, решении задач, организации процесса обучения, объясняя сложные темы. Нейросеть генерирует примеры, уравнения, тестовые вопросы и задачи разной сложности. Также может оценить готовый текст и указать на ошибки.</p>
+                <a href="https://chatgpt.com/" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Перейти к ChatGPT →
+                </a>
+            </div>
+
+            <!-- 8. DeepSeek -->
+            <div class="card-hover bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="text-5xl">🔬</div>
+                    <div>
+                        <h3 class="text-3xl font-semibold">DeepSeek</h3>
+                        <a href="https://chat.deepseek.com/" target="_blank" class="text-[#00d4ff] text-sm flex items-center gap-1">chat.deepseek.com <i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                </div>
+                <p class="text-gray-300 flex-1">Продвинутая языковая модель искусственного интеллекта, который может решать задачи, показывая пошаговое объяснение, используемые формулы и предлагая аналогичные задания для тренировки. Нейросеть также способна создавать тесты, аналогичные тем, что встречаются на экзаменах, и составлять графики подготовки.</p>
+                <a href="https://chat.deepseek.com/" target="_blank"
+                   class="mt-8 inline-flex items-center justify-center bg-white text-[#05050f] font-semibold py-4 px-8 rounded-2xl hover:bg-[#00d4ff] hover:text-white text-lg">
+                    Перейти к DeepSeek →
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="bg-black py-12 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 text-center text-gray-400 text-sm">
+            © 2026 NeuroEGE<br>
+            <span class="text-xs mt-4 block"></span>
+        </div>
+    </footer>
+
+    <script>
+        // Tailwind script
+        function initializeTailwind() {
+            return {
+                config(userConfig = {}) {
+                    return {
+                        configUser: userConfig,
+                        theme: {
+                            extend: {},
+                        },
+                    }
+                },
+                theme: {
+                    extend: {},
+                },
+            }
+        }
+
+        // Прогресс-бар
+        function updateProgressBar() {
+            const progressBar = document.getElementById('progress-bar')
+            const scrollTop = window.scrollY
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+            const scrollPercent = (scrollTop / docHeight) * 100
+            progressBar.style.width = `${scrollPercent}%`
+        }
+
+        window.addEventListener('scroll', updateProgressBar)
+
+        // Инициализация
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeTailwind()
+            console.log('%cNeuroEGE сайт успешно загружен! 🚀', 'color:#00d4ff; font-size:18px; font-weight:bold')
+
+            // Анимация плавающего эмодзи (если нужно)
+            const emoji = document.querySelector('.animate-float')
+            if (emoji) {
+                emoji.style.animation = 'float 6s ease-in-out infinite'
+            }
+        })
+
+        // Добавляем CSS-анимацию float через JS
+        const style = document.createElement('style')
+        style.innerHTML = `
+            @keyframes float {
+                0%, 100% { transform: translateY(0px); }
+                50% { transform: translateY(-30px); }
+            }
+            .animate-float {
+                animation: float 6s ease-in-out infinite;
+            }
+        `
+        document.head.appendChild(style)
+    </script>
+</body>
+</html>
